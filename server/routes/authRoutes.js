@@ -1,105 +1,55 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { check, validationResult } = require("express-validator");
-const User = require("../models/User"); // Ensure the User model exists
-const router = express.Router();
+import React, { useState } from "react";
+import axios from "axios";
+import "../styles/Login.css";
 
-// JWT Secret Key
-const JWT_SECRET = process.env.JWT_SECRET || "mysecretkey";
+const Login = ({ onClose, onRegister, onLoginSuccess }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-// @route   GET /api/auth
-// @desc    Test route
-// @access  Public
-router.get("/", (req, res) => {
-  res.send("Auth route is working!");
-});
-
-// @route   POST /api/auth/register
-// @desc    Register a new user (Admin, Patron, or Judge)
-router.post(
-  "/register",
-  [
-    check("name", "Name is required").not().isEmpty(),
-    check("email", "Include a valid email").isEmail(),
-    check("password", "Password must be at least 6 characters").isLength({ min: 6 }),
-    check("role", "Role is required").isIn(["admin", "patron", "judge"]),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { name, email, password, role } = req.body;
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(""); // Reset previous errors
 
     try {
-      let user = await User.findOne({ email });
-      if (user) {
-        return res.status(400).json({ msg: "User already exists" });
-      }
-
-      user = new User({
-        name,
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
         email,
-        password: await bcrypt.hash(password, 10), // Hash password
-        role,
+        password,
       });
 
-      await user.save();
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role);
+      localStorage.setItem("userName", res.data.name);
 
-      res.json({ msg: "User registered successfully" });
+      alert(`Welcome ${res.data.name}, Role: ${res.data.role}`);
+
+      onLoginSuccess(res.data.role); // Call parent function with role
+      onClose(); // Close login popup
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
+      console.error(err.response.data);
+      setError(err.response.data.msg || "Login failed. Try again.");
     }
-  }
-);
+  };
 
-// @route   POST /api/auth/login
-// @desc    User login
-router.post(
-  "/login",
-  [
-    check("email", "Include a valid email").isEmail(),
-    check("password", "Password is required").exists(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+  return (
+    <div className="login-overlay" onClick={(e) => e.target.classList.contains("login-overlay") && onClose()}>
+      <div className="login-popup">
+        <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>}
+        <form onSubmit={handleLogin}>
+          <label>Email:</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" required />
 
-    const { email, password } = req.body;
+          <label>Password:</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" required />
 
-    try {
-      let user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
-      }
+          <button type="submit">Login</button>
+        </form>
+        <p className="register-link">New? <span onClick={onRegister}>Register here</span></p>
+        <button className="close-btn" onClick={onClose}>✖</button>
+      </div>
+    </div>
+  );
+};
 
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({ msg: "Invalid Credentials" });
-      }
-
-      // Generate JWT Token
-      const payload = {
-        user: {
-          id: user.id,
-          role: user.role,
-        },
-      };
-
-      jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" }, (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      });
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
-  }
-);
-
-module.exports = router;
+export default Login;
