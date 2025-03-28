@@ -1,0 +1,71 @@
+/* Home Page Styles */
+.home-container {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+.home-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Poppins', Arial, sans-serif; /* Use a modern font */
+}
+
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.category-box {
+  background: linear-gradient(145deg, #ffffff, #dcdcdc);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  text-align: center;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.2rem; /* Increase font size */
+  font-family: 'Poppins', Arial, sans-serif;
+  color: #333; /* Darker text for better readability */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-box:hover {
+  transform: scale(1.08);
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5; /* Light hover effect */
+}
+
+/* Make categories more readable on small screens */
+@media (max-width: 768px) {
+  .category-box {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+}
+
+
+/* Search Bar */
+.search-bar {
+  width: 60%;
+  max-width: 400px;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Center "No results" message */
+.no-results {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+  margin-top: 10px;
+}

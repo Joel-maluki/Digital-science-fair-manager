@@ -1,0 +1,80 @@
+/* General Styles */
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5dc; /* Cream Background */
+  transition: background 0.3s ease-in-out;
+}
+
+.app-container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #007bff;
+  color: white;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  background: #ff9800;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #e68900;
+}
+
+/* Category Grid */
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Category Box */
+.category-box {
+  width: 180px;
+  height: 120px;
+  margin: 10px;
+  background: linear-gradient(135deg, #ff5722, #ff9800);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+}
+
+.category-box:hover {
+  transform: scale(1.1);
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.dark-mode header {
+  background: #333;
+}
+
+.dark-mode .category-box {
+  background: linear-gradient(135deg, #673ab7, #512da8);
+}

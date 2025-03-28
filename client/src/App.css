@@ -1,0 +1,136 @@
+/* Global Styles */
+body {
+  background-color: #f5f5dc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', Arial, sans-serif; /* More readable font */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #222;
+  color: #fff;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  background-color: #007bff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links li a, .nav-btn {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  text-decoration: underline;
+}
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-bar {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #0056b3;
+}
+
+/* Categories Grid */
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Category Box */
+.category-box {
+  background: linear-gradient(145deg, #e0e0e0, #c0c0c0);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-box:hover {
+  transform: scale(1.05);
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+.footer {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer .social-icons a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.footer .social-icons a:hover {
+  text-decoration: underline;
+}
+
+/* Fix login button and dark mode button */
+.nav-btn, .dark-mode-btn {
+  background-color: transparent;
+  border: 2px solid white; /* Add a defined border */
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center; /* Ensure text stays centered */
+  width: auto; /* Ensure button does not stretch */
+  display: inline-block; /* Avoid full width */
+}
+
+.nav-btn:hover, .dark-mode-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-btn:focus, .dark-mode-btn:focus {
+  outline: none; /* Remove default button focus */
+  border-color: #f0f0f0;
+}
